@@ -11,23 +11,24 @@
                     <div class="sc_content sc_content_default sc_float_center sc_align_center sc_content_width_1_1">
                         <div class="sc_content_container">
                             <div class="sc_layouts_item">
-                                <nav class="sc_layouts_menu sc_layouts_menu_default menu_hover_fade" data-animation-in="fadeIn" data-animation-out="fadeOut">
+                                <nav class="sc_layouts_menu sc_layouts_menu_default menu_hover_fade"
+                                    data-animation-in="fadeIn" data-animation-out="fadeOut">
                                     <ul id="menu_footer" class="sc_layouts_menu_nav menu_footer_nav">
                                         <li class="menu-item menu-item-home">
                                             <a href="/">
                                                 <span>Home</span>
                                             </a>
                                         </li>
-                                       
-                                        
-                                       
-                                        
+
+
+
+
                                         <li class="menu-item">
                                             <a href="/shop">
                                                 <span>Shop</span>
                                             </a>
                                         </li>
-                                       
+
                                         <li class="menu-item">
                                             <a href="/contacts">
                                                 <span>Contacts</span>
@@ -46,7 +47,8 @@
                             <div class="text_column">
                                 <div class="widget widget_text">
                                     <div class="textwidget">
-                                        <div class="fsz_13px fw_400">&copy;2017 Alice’s Lingerie Store. All Rights Reserved. <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>
+                                        <div class="fsz_13px fw_400">&copy;2017 Alice’s Lingerie Store. All Rights
+                                            Reserved. <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>
                                         </div>
                                     </div>
                                 </div>
@@ -68,35 +70,37 @@
 
 
 <script>
-    function buynow() {
-        addToCart()
+    async function buynow() {
+      await  addToCart()
         window.location.href = '/checkout'
 
     }
     async function addToCart() {
-        let productId = document.getElementById("product-id").value;
-        let quantity = document.getElementById("quantity").value;
-        let color = document.getElementById("pa_color").value;
-        let size = document.getElementById("pa_size").value;
-        size = size != " " ? size : "m "
-        color = color != "" ? color : "red-passion"
-        console.log({
-            productId,
-            quantity,
-            color,
-            size
-        });
-        let response = await $.ajax({
-            url: "/api/cart",
-            method: "POST",
-            data: {
+            let productId = document.getElementById("product-id").value;
+            let quantity = document.getElementById("quantity").value;
+            let color = document.getElementById("pa_color").value;
+            let size = document.getElementById("pa_size").value;
+            size = size != " " ? size : "m "
+            color = color != "" ? color : "red-passion"
+            console.log({
                 productId,
                 quantity,
                 color,
                 size
-            }
-        })
-        getCartData()
+            });
+            let response = await $.ajax({
+                url: "/api/cart",
+                method: "POST",
+                data: {
+                    productId,
+                    quantity,
+                    color,
+                    size
+                }
+            })
+            console.log("Add to cart response: ",response)
+            getCartData()
+       
     }
 
     function addCartItem(cartItem, index) {
@@ -146,14 +150,14 @@
         let cartQuantity = document.getElementById("cart-quantity")
         let cartSubtotal = document.getElementById("cart-subtotal")
         cartDom.innerHTML = ""
-        console.log(response);
+        console.log("GET CART DATA RESPONSE: ",response);
         let subtotal = 0;
         for (let i = 0; i < response.length; i++) {
             const cartItem = response[i];
             cartDom.innerHTML += addCartItem(cartItem, i)
             subtotal += parseFloat(cartItem.price) * parseFloat(cartItem.quantity);
         }
-        cartSubtotal.innerHTML = subtotal ;
+        cartSubtotal.innerHTML = subtotal;
         cartQuantity.innerHTML = response.length;
     }
     getCartData()
