@@ -503,14 +503,17 @@
             console.log("TRIGGER");
             let firstName = document.getElementById('firstName').value
             let lastName = document.getElementById('lastName').value
+            let phone = document.getElementById('phone').value
             let email = document.getElementById('email').value
             let address = document.getElementById('address').value
+            let address2 = document.getElementById('address2').value
             let countrySelect = document.getElementById('country-select').value
+            let state = document.getElementById('state').value
+            let zip = document.getElementById('zip').value
             let name = document.getElementById('cc-name').value
             let number = document.getElementById('cc-number').value
             let expiration = document.getElementById('cc-expiration').value
             let cvv = document.getElementById('cc-cvv').value
-            let phone = document.getElementById('phone').value
             if (firstName.length < 1 || lastName.length < 1 || email.length < 1 || address.length < 1 || phone.length < 1) {
                 alert("EMPTY DATA")
                 return
@@ -523,10 +526,21 @@
                     method: 'POST',
                     url: '/api/checkout',
                     data: {
+                        firstName,
+                        lastName,
+                        phone,
+                        email,
+                        address,
+                        address2,
+                        countrySelect,
+                        state,
+                        zip,
+
                         name,
                         number,
                         expiration,
                         cvv
+
                     }
                 })
 
@@ -669,16 +683,16 @@
             <div style="display:flex">
                 <img src="${item.featureImage}" style="width:70px;margin-right:10px"/>
                         <div>
-                            <h6 class="my-0">${item.name.slice(0,50)+'...'}</h6>
+                            <h6 class="my-0">${item.name.slice(0, 50) + '...'}</h6>
                             <small class="text-muted">Quantity: ${item.quantity}</small><br>
-                            <small class="text-muted">Color: ${item.color.charAt(0).toUpperCase()+item.color.slice(1)}</small><br>
+                            <small class="text-muted">Color: ${item.color.charAt(0).toUpperCase() + item.color.slice(1)}</small><br>
                             <small class="text-muted">Size: ${item.size.toUpperCase()}</small>
                             </div>
                         </div>
                         <span class="text-muted">$${item.price}</span>
                     </li>`
                 total += parseFloat(item.price) * parseInt(item.quantity)
-            index++;
+                index++;
             }
             orderList.innerHTML += `<li class="list-group-item d-flex justify-content-between">
                         <span>Total (USD)</span>
