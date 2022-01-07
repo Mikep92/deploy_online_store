@@ -2,7 +2,7 @@
 <html lang="en-US" class="no-js scheme_default">
 
 <head>
-    <title>Fashion/TShirt</title>
+    <title>Product Detail</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="format-detection" content="telephone=no">
@@ -44,7 +44,7 @@
                             <article class="post_item_single post_type_product">
                                 <nav class="woocommerce-breadcrumb">
                                     <a href="/">Home</a>&nbsp;&#47;&nbsp;<a href="#">Fashion
-                                        World</a>&nbsp;&#47;&nbsp;POD
+                                        World</a>&nbsp;&#47;&nbsp; <%=product.name%>
                                 </nav>
 
                                 <div class="product type-product wcspt-has-gallery">
@@ -63,9 +63,8 @@
                                                 <%for(let i=0; i < product.subImage.length;i++){ let
                                                     src=product.subImage[i]%>
                                                     <li class="yith_magnifier_thumbnail">
-                                                        <a href="<%=src%>"
-                                                            class="yith_magnifier_thumbnail" title="product-19"
-                                                            data-small="<%=src%>">
+                                                        <a href="<%=src%>" class="yith_magnifier_thumbnail"
+                                                            title="product-19" data-small="<%=src%>">
                                                             <img src="<%=src%>" alt="" />
                                                         </a>
                                                     </li>
@@ -113,7 +112,7 @@
                                             data-product_variations="#">
                                             <table class="variations">
                                                 <tbody>
-                                                    <tr>
+                                                    <tr style="display: none">
                                                         <td class="label" style="display:inline"><label
                                                                 for="pa_size">Size:</label></td>
                                                         <td class="value">
@@ -189,7 +188,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr style="display: none">
                                                         <td class="label " style="display:inline"><label
                                                                 for="pa_color">Color</label></td>
                                                         <td class="value ">
@@ -198,13 +197,15 @@
                                                                 data-attribute_name="attribute_pa_color"
                                                                 data-show_option_none="yes">
                                                                 <option value="">Choose an option</option>
-                                                                <option value="gentle-peach" selected="selected">Gentle Peach</option>
+                                                                <option value="gentle-peach" selected="selected">Gentle
+                                                                    Peach</option>
                                                                 <option value="red-passion">Red Passion</option>
                                                                 <option value="green">Green</option>
                                                                 <option value="black">Black</option>
                                                                 <option value="chocolate">Black</option>
                                                                 <option value="charcoalgrey">Charcoal Grey</option>
-                                                                <option value="athleticheather">Athletic Heather</option>
+                                                                <option value="athleticheather">Athletic Heather
+                                                                </option>
                                                                 <option value="royal">Royal</option>
                                                                 <option value="kelly">Kelly</option>
                                                                 <option value="burntorange">Burnt Orange</option>
@@ -228,68 +229,83 @@
                                                                 </span>
                                                                 <span
                                                                     class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                                    data-value="red-passion" data-tooltip="Red Passion ">
+                                                                    data-value="red-passion"
+                                                                    data-tooltip="Red Passion ">
                                                                     <span class="bg_red-orange"></span>
                                                                 </span>
                                                                 <span
-                                                                class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                                data-value="kiwi" data-tooltip="Kiwi">
-                                                                <span style="background-color: rgb(112, 214, 81);"></span>
-                                                            </span>
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="kiwi" data-tooltip="Kiwi">
+                                                                    <span
+                                                                        style="background-color: rgb(112, 214, 81);"></span>
+                                                                </span>
                                                                 <span
-                                                                class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                                data-value="classicpink" data-tooltip="Classic Pink ">
-                                                                <span style="background-color: rgb(234, 189, 211);"></span>
-                                                            </span>
-                                                            <span
-                                                            class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                            data-value="burntorange" data-tooltip="Burnt Orange ">
-                                                            <span style="background-color: rgb(255, 102, 0);"></span>
-                                                        </span>
-                                                            <span
-                                                            class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                            data-value="kelly" data-tooltip="Kelly ">
-                                                            <span style="background-color: rgb(0, 152, 79);"></span>
-                                                        </span>
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="classicpink"
+                                                                    data-tooltip="Classic Pink ">
+                                                                    <span
+                                                                        style="background-color: rgb(234, 189, 211);"></span>
+                                                                </span>
+                                                                <span
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="burntorange"
+                                                                    data-tooltip="Burnt Orange ">
+                                                                    <span
+                                                                        style="background-color: rgb(255, 102, 0);"></span>
+                                                                </span>
+                                                                <span
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="kelly" data-tooltip="Kelly ">
+                                                                    <span
+                                                                        style="background-color: rgb(0, 152, 79);"></span>
+                                                                </span>
 
                                                                 <span
-                                                                class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                                data-value="green" data-tooltip="Green">
-                                                                <span style="background-color: rgb(74, 57, 127);"></span></span>
-                                                            <span
-                                                                class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                                data-value="black" data-tooltip="Black">
-                                                                <span style="background-color: rgb(17, 17,17);"></span>
-                                                                
-                                                            </span>
-                                                            <span
-                                                                class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                                data-value="chocolate" data-tooltip="Chocolate">
-                                                                <span style="background-color: rgb(56, 29, 27);"></span>
-                                                                
-                                                            </span>
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="green" data-tooltip="Green">
+                                                                    <span
+                                                                        style="background-color: rgb(74, 57, 127);"></span></span>
+                                                                <span
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="black" data-tooltip="Black">
+                                                                    <span
+                                                                        style="background-color: rgb(17, 17,17);"></span>
 
-                                                        </span>
-                                                        <span
-                                                            class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                            data-value="charcoalgrey" data-tooltip="Charcoal Grey">
-                                                            <span style="background-color: rgb(54, 69, 79);"></span>
-                                                            
-                                                        </span>
-                                                        <span
-                                                        class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                        data-value="athleticheather" data-tooltip="Athletic Heather">
-                                                        <span style="background-color: rgb(74, 57, 127);"></span>
-                                                        
-                                                    </span>
-                                                    <span
-                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
-                                                    data-value="royal" data-tooltip="Royal">
-                                                    <span style="background-color: rgb(5, 74, 232);"></span>
-                                                    
-                                                </span>
+                                                                </span>
+                                                                <span
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="chocolate" data-tooltip="Chocolate">
+                                                                    <span
+                                                                        style="background-color: rgb(56, 29, 27);"></span>
 
-                                              
+                                                                </span>
+
+                                                                </span>
+                                                                <span
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="charcoalgrey"
+                                                                    data-tooltip="Charcoal Grey">
+                                                                    <span
+                                                                        style="background-color: rgb(54, 69, 79);"></span>
+
+                                                                </span>
+                                                                <span
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="athleticheather"
+                                                                    data-tooltip="Athletic Heather">
+                                                                    <span
+                                                                        style="background-color: rgb(74, 57, 127);"></span>
+
+                                                                </span>
+                                                                <span
+                                                                    class="trx_addons_attrib_item trx_addons_attrib_color trx_addons_tooltip"
+                                                                    data-value="royal" data-tooltip="Royal">
+                                                                    <span
+                                                                        style="background-color: rgb(5, 74, 232);"></span>
+
+                                                                </span>
+
+
 
 
 
@@ -309,7 +325,10 @@
                                                                 for="pa_size">Quantity:</label></td>
                                                         <td class="value">
                                                             <div class="col-lg-2">
-                                                               <input type="number" name="" id="quantity" min="1" value="1" style="width: 60px;padding: 10px;color:black">
+                                                                <input type="number"
+                                                                    onChange="setPrice(<%= product.priceMin%>,<%= product.priceMax%>, <%= product.discount%>)"
+                                                                    name="" id="quantity" min="1" value="1"
+                                                                    style="width: 60px;padding: 10px;color:black">
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -321,11 +340,11 @@
                                                 </div>
                                                 <div class="woocommerce-variation-add-to-cart variations_button">
                                                     <button type="button" style="margin-right:10px;"
-                                                        class=" btn-add-to-cart button disabled"
-                                                        onclick="addToCart()"  style="text-transform:Capitalize!important">Add To Cart</button>
+                                                        class=" btn-add-to-cart button disabled" onclick="addToCart()"
+                                                        style="text-transform:Capitalize!important">Add To Cart</button>
                                                     <button type="button" class="btn-buy-now  button disabled "
-                                                        onclick="buynow()" 
- style="text-transform:Capitalize!important">Buy Now</button>
+                                                        onclick="buynow()"
+                                                        style="text-transform:Capitalize!important">Buy Now</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -334,7 +353,7 @@
                                     <!-- .summary -->
                                     <input type="hidden" value="<%=product.id%>" id="product-id">
                                     <div class="woocommerce-tabs sc_tabs">
-                                        
+
                                         <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab"
                                             id="tab-description">
 
@@ -502,7 +521,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                 </div>
                                 <!-- #product-->
                             </article>
@@ -541,12 +560,27 @@
 
     <a href="#" class="trx_addons_scroll_to_top trx_addons_icon-up" title="Scroll to top"></a>
     <script>
+
         function setPrice(priceMin, priceMax, discount) {
-            let size = document.getElementById('pa_size').value;
+            let quantity = parseInt(document.getElementById('quantity').value);
+            // let size = document.getElementById('pa_size').value;
             let dom = document.getElementById('final-price');
-            let finalPrice =( (priceMin+priceMax)/2).toFixed(2);
-            dom.innerHTML = `<span class="old-price" style="font-weight: normal!important;font-size:1.9rem">$ ${(finalPrice / discount).toFixed(2)}</span>`
-            dom.innerHTML += '  $' + finalPrice ;
+            let finalPrice = parseFloat(priceMin + priceMax) / 2
+            console.log("Discount = ", discount);
+            switch (quantity) {
+                case 1:
+                    discount = 0
+                    break;
+                case 2:
+                    discount = 0.1
+                    break;
+                default:
+                    discount = 0.2
+                    break;
+            }
+            console.log(`Final Price = ${finalPrice}`);
+            dom.innerHTML = `<span class="old-price" style="font-weight: normal!important;font-size:1.9rem">$ ${(finalPrice*  quantity).toFixed(2)}</span>`
+            dom.innerHTML += '  $' + ((finalPrice * (1 - discount)).toFixed(2)*quantity).toFixed(2);
         }
     </script>
 </body>

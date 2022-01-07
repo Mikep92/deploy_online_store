@@ -113,16 +113,7 @@
             alt="">${cartItem.name}
     </a>
     <dl class="variation">
-        <dt class="variation-Size">Size:
-        </dt>
-        <dd class="variation-Size">
-            <p>${cartItem.size.toUpperCase()}</p>
-        </dd>
-        <dt class="variation-Color">Color:
-        </dt>
-        <dd class="variation-Color">
-            <p>${cartItem.color.replace('-', ' ').toUpperCase()}</p>
-        </dd>
+       
     </dl>
         <span class="quantity">${cartItem.quantity} × <span
             class="amount">${cartItem.price}<span
@@ -157,7 +148,7 @@
             cartDom.innerHTML += addCartItem(cartItem, i)
             subtotal += parseFloat(cartItem.price) * parseFloat(cartItem.quantity);
         }
-        cartSubtotal.innerHTML = subtotal;
+        cartSubtotal.innerHTML = subtotal.toFixed(2);
         cartQuantity.innerHTML = response.length;
     }
     getCartData()

