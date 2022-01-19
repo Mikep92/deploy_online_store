@@ -418,8 +418,8 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="cc-number">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number" onkeyup="validateCard()"
-                                placeholder="" required>
+                            <input type="text" class="form-control" id="cc-number" onkeypress="return checkDigit(event)"
+                                onkeyup="validateCard()" placeholder="" required>
                             <div class="invalid-feedback">
                                 Credit card number is required
                             </div>
@@ -564,16 +564,14 @@
             let cardNumber = document.getElementById('cc-number').value
             if (cardNumber.length > 22) {
                 document.getElementById('cc-number').value = cardNumber.slice(0, 22)
-
                 return
             }
-            console.log("Card number: ", cardNumber, " - ", cardNumber.length, " vs ", oldLength);
-            let isSpace = cardNumber.length == 4 || cardNumber.length == 9 || cardNumber.length == 14;
-            let isDelete = cardNumber.length <= oldLength
-            console.log("SPACE?: ", isSpace, !isDelete);
-            if (isSpace && !isDelete) {
-                document.getElementById('cc-number').value = cardNumber + ' '
+            if (cardNumber.length > 4) {
+                cardNumber = cc_format(cardNumber)
             }
+
+            document.getElementById('cc-number').value = cardNumber
+
             // check visa
             for (const number of isVisa) {
                 let prefix = number + ""
@@ -639,18 +637,45 @@
         }
         let oldExp = 0;
 
+        function checkDigit(event) {
+            var code = (event.which) ? event.which : event.keyCode;
+
+            if ((code < 48 || code > 57) && (code > 31)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        function cc_format(value) {
+            var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+            var matches = v.match(/\d{4,16}/g);
+            var match = matches && matches[0] || ''
+            var parts = []
+
+            for (i = 0, len = match.length; i < len; i += 4) {
+                parts.push(match.substring(i, i + 4))
+            }
+
+            if (parts.length) {
+                return parts.join(' ')
+            } else {
+                return value
+            }
+        }
         function validateExp() {
             let exp = document.getElementById('cc-expiration').value;
-            if (exp.charAt(0) != '0' && exp.charAt(0) != '1' && exp.length > 0) {
-                exp = '0' + exp;
-            }
-            if (exp.length == 2 && exp.length > oldExp) {
-                exp += '/'
-            }
-            if (exp.length > 5) {
-                exp = exp.slice(0, 5)
-            }
-            oldExp = exp.length;
+            exp = exp.replace(
+                    /[^0-9]/g, '' // To allow only numbers
+                ).replace(
+                    /^([2-9])$/g, '0$1' // To handle 3 > 03
+                ).replace(
+                    /^(1{1})([3-9]{1})$/g, '0$1/$2' // 13 > 01/3
+                ).replace(
+                    /^0{1,}/g, '0' // To handle 00 > 0
+                ).replace(
+                    /^([0-1]{1}[0-9]{1})([0-9]{1,2}).*/g, '$1/$2' // To handle 113 > 11/3
+                );
             document.getElementById('cc-expiration').value = exp;
         }
 
@@ -685,8 +710,7 @@
                         <div>
                             <h6 class="my-0">${item.name.slice(0, 50) + '...'}</h6>
                             <small class="text-muted">Quantity: ${item.quantity}</small><br>
-                            <small class="text-muted">Color: ${item.color.charAt(0).toUpperCase() + item.color.slice(1)}</small><br>
-                            <small class="text-muted">Size: ${item.size.toUpperCase()}</small>
+                           
                             </div>
                         </div>
                         <span class="text-muted">$${item.price}</span>
@@ -696,7 +720,7 @@
             }
             orderList.innerHTML += `<li class="list-group-item d-flex justify-content-between">
                         <span>Total (USD)</span>
-                        <strong id="total-price">$ ${total} </strong>
+                        <strong id="total-price">$ ${total.toFixed(2)} </strong>
                     </li>`;
         }
         getCart()
