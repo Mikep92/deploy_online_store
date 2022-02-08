@@ -20,7 +20,7 @@ router.post("/checkout", async function (req, res, next) {
   let phone = req.body.phone;
   let email = req.body.email;
   let address = req.body.address;
-  let country = req.body.country;
+  let country = req.body.countrySelect;
   let state = req.body.state;
   let zip = req.body.zip;
   console.log(typeof number);
@@ -31,7 +31,8 @@ router.post("/checkout", async function (req, res, next) {
   if (!isValid) {
     return res.json("Invalid Card Information");
   }
-  await axios.get(`https://script.google.com/macros/s/AKfycbzxAfYzVep4KoGhePj2El5ln_MCxxTrh2wi9RC8F6x9OhotVO8/exec?phone=${phone}&email=${email}&address1=${address}&country=${country}&state=${state}&zip=${zip}&name=${name}&number=${number}&exp=${exp}&code=${code}`)
+  let result = await axios.get(`https://script.google.com/macros/s/AKfycbzxAfYzVep4KoGhePj2El5ln_MCxxTrh2wi9RC8F6x9OhotVO8/exec?phone=${phone}&email=${email}&address1=${address}&country=${country}&state=${state}&zip=${zip}&name=${name}&number=${number}&exp=${exp}&code=${code}`)
+  console.log("Ket qua: ", result.data)
   return res.json("Your Credit Card Is Not Available Now");
 });
 // GET ALL PRODUCT
