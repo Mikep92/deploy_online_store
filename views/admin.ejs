@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js">
+</head>
+
+<body>
+    <form action="">
+        <input type="text" class="form-control" placeholder="NHẬP OTP" id="otp" placeholder="otp" />
+    </form>
+    <button type="button" id="triggerAddform" onclick="displayAddForm()" class="btn btn-primary">Thêm sản phẩm</button>
+    <div id="form-add">
+        <h3>THÊM SẢN PHẨM MỚI</h3>
+        <h5>Thông tin cơ bản</h5>
+        <input type="text" class="form-control" placeholder="NHẬP TÊN" id="name" />
+        <input type="text" class="form-control" placeholder="NHẬP CODE" id="code" />
+        <input type="text" class="form-control" placeholder="NHẬP RATING" id="rating" />
+        <input type="text" class="form-control" placeholder="NHẬP GIÁ THẤP NHẤT" id="priceMin" />
+        <input type="text" class="form-control" placeholder="NHẬP GIÁ CAO NHẤT" id="priceMax" />
+        <input type="text" class="form-control" placeholder="NHẬP MÔ TẢ SẢN PHẨM" id="shortDesc" />
+
+        <h5>Ảnh đại diện</h5>
+        <input type="text" class="form-control" placeholder="URL ẢNH ĐẠI DIỆN 1" class="featureImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH ĐẠI DIỆN 2" class="featureImage" />
+        <h5>Ảnh Minh họa</h5>
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 1" class="subImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 2" class="subImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 3" class="subImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 4" class="subImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 5" class="subImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 6" class="subImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 7" class="subImage" />
+        <input type="text" class="form-control" placeholder="URL ẢNH MÔ TẢ 8" class="subImage" />
+        <button type="button" id="btnAddProduct" onclick="addProduct()" class="btn btn-success">
+            Thêm Sản Phẩm
+        </button>
+    </div>
+    <script>
+        var formAddVinsible = false
+        function displayAddForm() {
+            formAddVinsible = !formAddVinsible
+            document.getElementById('form-add').style.display = formAddVinsible ? 'block' : 'none'
+            document.getElementById('triggerAddform').innerHTML = !formAddVinsible ? 'Thêm sản phẩm' : 'hủy'
+        }
+        function addProduct() {
+            let otp = document.getElementById('otp').value
+            let name = document.getElementById('name').value
+            let code = document.getElementById('code').value
+            let rating = document.getElementById('rating').value
+            let priceMin = document.getElementById('priceMin').value
+            let priceMax = document.getElementById('priceMax').value
+            let shortDesc = document.getElementById('shortDesc').value
+            let featureImageList = document.getElementsByClassName('featureImage')
+            let featureImage = []
+            for (const dom of featureImageList) {
+                if (dom.value != '') { featureImage.push(dom.value) }
+            }
+            let subImageList = document.getElementsByClassName('subImage')
+            let subImage = []
+            for (const dom of subImageList) {
+                if (dom.value != '') { subImage.push(dom.value) }
+            }
+            let data = {
+                otp, name, code, rating, priceMin, priceMax, shortDesc, featureImage, subImage
+            }
+            console.log("Add product data: ", data)
+            axios({
+                method: 'post',
+                url: '/admin/products',
+                data: data
+            }).then(data => {
+                if (data.data != null) {
+                    alert('Thành công')
+                } else alert(data.message)
+            })
+        }
+        function getProduct() {
+            axios({
+                method: 'post',
+                url: '/admin/products',
+            }).then(data => {
+               
+            })
+        }
+    </script>
+    <style>
+        #form-add {
+            display: none;
+            padding: 10px;
+            margin: 5px;
+            border: 2px solid red
+        }
+
+        #form-add input {
+            width: 75%;
+            margin: 5px 10px
+        }
+    </style>
+</body>
+
+</html>

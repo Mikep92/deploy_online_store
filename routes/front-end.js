@@ -3,13 +3,21 @@ var router = express.Router();
 const axios = require('axios')
 
 /* GET home page. */
-router.get('/',async function (req, res, next) {
+router.get('/', async function (req, res, next) {
     const product = await axios({
         url: process.env.BASE_DOMAIN + '/api/get-all-product',
         method: 'GET'
     })
-    res.render('home', { layout: 'layouts/full-page', products:product.data.slice(0,5)});
+    res.render('home', { layout: 'layouts/full-page', products: product.data.slice(0, 5) });
 });
+router.get('/product-control-panel', function (req, res) {
+    // if (req.params.otp != '12eha#so#de%rur#*&$^@JFH98y23') {
+    //     res.redirect('/')
+    // } else 
+        res.render('admin')
+    
+
+})
 /* GET home page. */
 router.get('/about-us', function (req, res, next) {
     res.render('about', { title: 'Express' });

